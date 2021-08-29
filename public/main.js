@@ -10,50 +10,61 @@ import {
 
 const api = new APIWrapper()
 
-let animatedMessage = new Queue()
+let animatedMessages = new Queue()
 
-let customMessage = new Queue()
+let customMessages = new Queue()
 
-//
+let bstEventCache = new BinarySearchTree()
+
 api.setEventHandler((events) => {
-	console.log(' customMessage : ' + customMessage.length())
-	console.log('animatedMessage : ' + animatedMessage.length())
 	if (events.length != 0) parseEvents(events)
 })
-
-//Parse events by type
-function parseEvents(events) {
-	events.forEach((element) => {
-		if (element.type == API_EVENT_TYPE.ANIMATED_GIFT) {
-			animatedMessage.enqueue(element)
-		} else {
-			customMessage.enqueue(element)
-		}
-	})
-}
-
-function showAnimation(message) {
-	animateGift(message)
-	addMessage(message)
-}
 
 setInterval(() => {
 	startMain()
 }, 500)
 
-// main function
+// Main function(Recursive)
 function startMain() {
-	if (!animatedMessage.isEmpty() && !isPossiblyAnimatingGift()) {
-		showAnimation(animatedMessage.dequeue())
+	if (!animatedMessages.isEmpty() && !isPossiblyAnimatingGift()) {
+		showAnimation(animatedMessages.dequeue())
 	} else if (
-		!customMessage.isEmpty() &&
-		(customMessage.peek().type == API_EVENT_TYPE.GIFT ||
-			Date.now() - customMessage.peek().timestamp >= 20000)
+		!customMessages.isEmpty() &&
+		(customMessages.peek().type == API_EVENT_TYPE.GIFT ||
+			Date.now() - customMessages.peek().timestamp >= 20000)
 	) {
-		addMessage(customMessage.dequeue())
-	} else if (!customMessage.isEmpty()) {
-		customMessage.dequeue()
+		showMessage(customMessages.dequeue())
+	} else if (!customMessages.isEmpty()) {
+		customMessages.dequeue()
 		startMain()
+	}
+}
+
+//Parse events by type
+function parseEvents(events) {
+	events.forEach((element) => {
+		if (element.type == API_EVENT_TYPE.ANIMATED_GIFT) {
+			animatedMessages.enqueue(element)
+		} else {
+			customMessages.enqueue(element)
+		}
+	})
+}
+
+function showMessage(message) {
+	//search duplicateEvents in bst : complexity O(log n)
+	if (!bstEventCache.contains(message.id)) {
+		addMessage(message)
+		bstEventCache.add(message.id)
+	}
+}
+
+function showAnimation(message) {
+	//search duplicateEvents in bst : complexity O(log n)
+	if (!bstEventCache.contains(message.id)) {
+		animateGift(message)
+		addMessage(message)
+		bstEventCache.add(message.id)
 	}
 }
 
@@ -90,4 +101,63 @@ Queue.prototype.length = function() {
 }
 //#endregion
 
-// NOTE: UI helper methods from `dom_updates` are already imported above.
+//#region BinarySearchTree contruction and functions
+function BinarySearchTree() {
+	this.root = null
+}
+
+BinarySearchTree.prototype.makeNode = function(value) {
+	var node = {}
+	node.value = value
+	node.left = null
+	node.right = null
+	return node
+}
+
+BinarySearchTree.prototype.add = function(value) {
+	var currentNode = this.makeNode(value)
+	if (!this.root) {
+		this.root = currentNode
+	} else {
+		this.insert(currentNode)
+	}
+	return this
+}
+
+BinarySearchTree.prototype.insert = function(currentNode) {
+	var value = currentNode.value
+	var traverse = function(node) {
+		//if value is equal to the value of the node, ignore
+		//and exit function since we don't want duplicates
+		if (value === node.value) {
+			return
+		} else if (value > node.value) {
+			if (!node.right) {
+				node.right = currentNode
+				return
+			} else traverse(node.right)
+		} else if (value < node.value) {
+			if (!node.left) {
+				node.left = currentNode
+				return
+			} else traverse(node.left)
+		}
+	}
+	traverse(this.root)
+}
+
+BinarySearchTree.prototype.contains = function(value) {
+	var node = this.root
+	var traverse = function(node) {
+		if (!node) return false
+		if (value === node.value) {
+			return true
+		} else if (value > node.value) {
+			return traverse(node.right)
+		} else if (value < node.value) {
+			return traverse(node.left)
+		}
+	}
+	return traverse(node)
+}
+//#endregion

@@ -29,14 +29,14 @@ You are only required to support the latest Desktop versions of Chrome and/or Sa
 
 ✓- There can only be one event shown to the user per 500ms.
 
-- Hint: Don't rely on event handler for your own timing.
+✓ - Hint: Don't rely on event handler for your own timing.
 
 ✓ - Events with the type `MESSAGE` older than 20 seconds should not be shown to the user.
 
 ✓ - You can assume: Client and mock server are in sync.
 
-- Handle duplicate events.
-  - You can use `possibleDuplicateEvent=true` for testing.
+✓- Handle duplicate events.
+✓ - You can use `possibleDuplicateEvent=true` for testing.
 
 # Files Provided
 
