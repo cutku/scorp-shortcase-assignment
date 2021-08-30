@@ -1,5 +1,3 @@
-// @ts-check
-
 import { APIWrapper, API_EVENT_TYPE } from './api.js'
 import {
 	addMessage,
