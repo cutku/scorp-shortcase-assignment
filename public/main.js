@@ -49,11 +49,14 @@ function parseEvents(events) {
 	})
 }
 
+//At duplicate recursive function will triggered
 function showMessage(message) {
 	//search duplicateEvents in bst : complexity O(log n)
 	if (!bstEventCache.contains(message.id)) {
 		addMessage(message)
 		bstEventCache.add(message.id)
+	} else {
+		startMain()
 	}
 }
 
