@@ -1,8 +1,7 @@
 # Data Structure and Algorithims
 This project is a good example for queue, recursive and binary search tree. The aim is less complexty with less code. All code is in index.js.
 
-This is submittion which is Scorp company assignment. 
-
+This is assignment given from Scorp company, needs are listed belove. 
 
 ## Sample Project Spec
 
