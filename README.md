@@ -1,4 +1,10 @@
-# Sample Project Spec
+# Data Structure and Algorithims
+This project is a good example for queue, recursive and binary search tree. The aim is less complexty with less code. All code is in index.js.
+
+This is submittion which is Scorp company assignment. 
+
+
+## Sample Project Spec
 
 This project is designed to demonstrate your experience regarding the asynchronous nature of modern web apps. We don't think this project will take much of your time but how long you work on it is **not** an important metric.
 
@@ -8,7 +14,7 @@ You only need to work on the `main.js` file to finish this project. Vanilla java
 
 You are only required to support the latest Desktop versions of Chrome and/or Safari.
 
-# Application Logic
+## Application Logic
 
 ✓ - You can assume: The user is only a viewer and cannot interact with the page.
 
@@ -38,43 +44,43 @@ You are only required to support the latest Desktop versions of Chrome and/or Sa
 ✓- Handle duplicate events.
 ✓ - You can use `possibleDuplicateEvent=true` for testing.
 
-# Files Provided
+## Files Provided
 
 NOTE: Code provided is designed to be basic and easy to read. It is not intended to be production-ready and we do not expect you to "fix" it.
 
-## index.html
+### index.html
 
 Includes page layout. Imports the `main.js` and `main.css` files.
 
-## main.js
+### main.js
 
 This is the main file you are expected to edit.
 
-## main.css
+### main.css
 
 CSS for the layout and basic UI.
 
-## api.js
+### api.js
 
 Mock API of this project. Treat it as the networking layer.
 
 NOTE: `JSDoc` type definitions are included here.
 
-## dom_updates.js
+### dom_updates.js
 
 Helper methods for dom manipulation.
 
-## assets/\*
+### assets/\*
 
 All static files (e.g. image and video).
 
-# Recommendations
+## Recommendations
 
 - Start by skimming provided files.
 - Make sure to read [Application Logic](#Application-Logic) carefully before coding.
 - It might be helpful to set `seed` and `slowMode` params for `APIWrapper` when debugging.
 
-# Delivery
+## Delivery
 
 You can send us your work in one of the following ways:
 
